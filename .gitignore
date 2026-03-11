@@ -1,0 +1,10 @@
+# Bazel build outputs
+bazel-*
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Claude Code
+.claude/

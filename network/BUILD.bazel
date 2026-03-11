@@ -1,0 +1,13 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
+kt_jvm_library(
+    name = "src_main",
+    srcs = glob(["src/main/kotlin/**/*.kt"]),
+    visibility = ["//visibility:public"],
+    kotlinc_opts = "//:kotlinc_jvm_target_11_options",
+    plugins = ["//:metro"],
+    deps = [
+        "//scope:src_main",
+        "@maven//:dev_zacsweers_metro_runtime_jvm",
+    ],
+)

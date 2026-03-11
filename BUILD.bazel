@@ -1,0 +1,23 @@
+load("@rules_kotlin//kotlin:core.bzl", "kt_kotlinc_options", "kt_compiler_plugin")
+
+kt_kotlinc_options(
+    name = "kotlinc_jvm_target_11_options",
+    jvm_target = "11",
+    visibility = ["//visibility:public"],
+)
+
+kt_compiler_plugin(
+    name = "metro",
+    id = "dev.zacsweers.metro",
+    target_embedded_compiler = True,
+    options = {
+        "enabled":"true",
+        "debug":"true",
+        "reports_destination":"/tmp/metro-build-reports",
+    },
+    deps = [
+        "@maven//:dev_zacsweers_metro_compiler",
+        "@maven//:dev_zacsweers_metro_runtime_jvm",
+    ],
+    visibility = ["//visibility:public"],
+)

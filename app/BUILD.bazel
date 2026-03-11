@@ -1,0 +1,30 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library", "kt_jvm_test")
+
+kt_jvm_library(
+    name = "src_main",
+    srcs = glob(["src/main/kotlin/**/*.kt"]),
+    visibility = ["//visibility:public"],
+    kotlinc_opts = "//:kotlinc_jvm_target_11_options",
+    plugins = ["//:metro"],
+    deps = [
+        "//network:src_main",
+        "//scope:src_main",
+        "@maven//:dev_zacsweers_metro_runtime_jvm",
+    ],
+)
+
+kt_jvm_test(
+    name = "test_main",
+    srcs = glob(["src/test/kotlin/**/*.kt"]),
+    test_class = "com.uber.metro.sample.AppGraphTest",
+    kotlinc_opts = "//:kotlinc_jvm_target_11_options",
+    plugins = ["//:metro"],
+    deps = [
+        ":src_main",
+        "//network:src_main",
+        "//scope:src_main",
+        "@maven//:com_google_truth_truth",
+        "@maven//:dev_zacsweers_metro_runtime_jvm",
+        "@maven//:junit_junit",
+    ],
+)
