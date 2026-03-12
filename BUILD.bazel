@@ -13,7 +13,7 @@ kt_compiler_plugin(
     options = {
         "enabled":"true",
         "debug":"true",
-        "reports_destination":"/tmp/metro-build-reports",
+        "reports_destination":"/tmp/metro-sample-bazel",
     },
     deps = [
         "@maven//:dev_zacsweers_metro_compiler",

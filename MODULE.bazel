@@ -16,13 +16,6 @@ single_version_override(
     version = "0.7.0",
 )
 
-# kt = use_extension("@rules_kotlin//kotlin:extensions.bzl", "kt")
-# kt.toolchain(
-#     experimental_use_abi_jars = True,
-#     jvm_target = "11",
-# )
-# use_repo(kt, "kotlin_toolchains")
-
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [

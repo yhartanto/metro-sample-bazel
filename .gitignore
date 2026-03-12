@@ -1,10 +1,10 @@
 # Bazel build outputs
 bazel-*
-
+build/
 # IDE
 .idea/
 .vscode/
 *.iml
-
+.DS_Store
 # Claude Code
 .claude/
