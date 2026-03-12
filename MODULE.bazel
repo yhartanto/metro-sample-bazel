@@ -7,7 +7,7 @@
 
 module(name = "metro-sample-bazel")
 
-bazel_dep(name = "rules_kotlin", version = "2.2.0")
+bazel_dep(name = "rules_kotlin", version = "2.3.10")
 bazel_dep(name = "rules_jvm_external", version = "6.10")
 
 # Override rules_android to use a version compatible with Bazel 9+
@@ -15,6 +15,17 @@ single_version_override(
     module_name = "rules_android",
     version = "0.7.0",
 )
+
+kt = use_extension("@rules_kotlin//kotlin:extensions.bzl", "kt")
+kt.toolchain(
+    experimental_use_abi_jars = True,
+    jvm_target = "11",
+)
+kt.compiler(
+    version = "2.3.10",
+    sha256 = "c8d546f9ff433b529fb0ad43feceb39831040cae2ca8d17e7df46364368c9a9e",
+)
+use_repo(kt, "kotlin_toolchains")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
