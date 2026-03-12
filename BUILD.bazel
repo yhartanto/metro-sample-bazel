@@ -1,9 +1,9 @@
-load("@rules_kotlin//kotlin:core.bzl", "kt_kotlinc_options", "kt_compiler_plugin")
+load("@rules_kotlin//kotlin:core.bzl", "kt_compiler_plugin", "define_kt_toolchain")
 
-kt_kotlinc_options(
-    name = "kotlinc_jvm_target_11_options",
+define_kt_toolchain(
+    name = "kotlin_toolchain",
+    experimental_use_abi_jars = True,
     jvm_target = "11",
-    visibility = ["//visibility:public"],
 )
 
 kt_compiler_plugin(

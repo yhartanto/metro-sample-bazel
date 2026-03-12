@@ -5,6 +5,7 @@ import dev.zacsweers.metro.DependencyGraph
 /**
  * Main dependency graph for the application. Metro will merge all @ContributesTo(AppScope::class)
  * interfaces into this graph.
+ *
  */
 @DependencyGraph(scope = AppScope::class)
 interface AppGraph {
