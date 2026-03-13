@@ -1,2 +1,5 @@
 # Enable bzlmod
 # common --enable_bzlmod
+
+# Override Kotlin compiler to use dev version of jvm-abi-gen
+build --override_repository=rules_kotlin~~rules_kotlin_extensions~com_github_jetbrains_kotlin_git=/tmp/kotlin-compiler-patched/kotlinc

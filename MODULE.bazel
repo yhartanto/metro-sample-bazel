@@ -22,8 +22,8 @@ kt.toolchain(
     jvm_target = "11",
 )
 kt.compiler(
-    version = "2.3.10",
-    sha256 = "c8d546f9ff433b529fb0ad43feceb39831040cae2ca8d17e7df46364368c9a9e",
+    version = "2.2.21",
+    sha256 = "88b39213506532c816ff56348c07bbeefe0c8d18943bffbad11063cf97cac3e6",
 )
 use_repo(kt, "kotlin_toolchains")
 
