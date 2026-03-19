@@ -1,44 +1,56 @@
 # Metro + Bazel + Kotlin ABI Jars ✅ WORKING
 
-## Solution: Custom jvm-abi-gen 2.2.255-SNAPSHOT
+## Solution: Kotlin 2.2.22-UBER with Custom jvm-abi-gen
 
-This project successfully uses **ABI jars with Metro DI framework** by using a custom-built `jvm-abi-gen` that preserves Metro compiler metadata.
+This project successfully uses **ABI jars with Metro DI framework** by using Kotlin 2.2.22-UBER which includes a custom-built `jvm-abi-gen` that preserves Metro compiler metadata.
 
 ### Setup
 
 **Versions:**
-- Kotlin compiler: **2.2.21**
-- jvm-abi-gen: **2.2.255-SNAPSHOT** (custom build)
+- Kotlin compiler: **2.2.22-UBER**
+- jvm-abi-gen: **2.2.22-UBER** (custom UBER build)
 - rules_kotlin: **2.3.10**
 - Metro: **0.11.2**
 
+**Initial Setup** (run once):
+
+```bash
+# Extract Kotlin 2.2.22-UBER from ~/Downloads/kotlin-2.2.22-UBER.zip
+./scripts/setup-kotlin-compiler.sh
+```
+
+This script creates `kotlin-compiler-override/` containing:
+- Kotlin compiler 2.2.22-UBER (extracted from ~/Downloads/kotlin-2.2.22-UBER.zip)
+- Custom `lib/jvm-abi-gen.jar` that preserves Metro metadata
+
 **Configuration:**
 
-1. **Custom jvm-abi-gen location**: `/tmp/kotlin-compiler-patched/kotlinc/`
-   - Kotlin compiler 2.2.21 with custom `lib/jvm-abi-gen.jar`
-   - Source: `libs/jvm-abi-gen/jvm-abi-gen-2.2.255-SNAPSHOT.jar`
+The `.bazelrc` file contains:
+```
+build --override_repository=rules_kotlin~~rules_kotlin_extensions~com_github_jetbrains_kotlin_git=%workspace%/kotlin-compiler-override
+```
 
-2. **Override mechanism**: `.bazelrc` contains:
-   ```
-   build --override_repository=rules_kotlin~~rules_kotlin_extensions~com_github_jetbrains_kotlin_git=/tmp/kotlin-compiler-patched/kotlinc
-   ```
+This overrides the Kotlin compiler to use our local version with the custom jvm-abi-gen.
 
-3. **Verification**:
-   ```bash
-   # Verify the jvm-abi-gen.jar version
-   shasum -a 256 /tmp/kotlin-compiler-patched/kotlinc/lib/jvm-abi-gen.jar
-   # Should output: ede34ff07dcaf1d149446c6f7652ac40ef80331bb34636aa1785422beb929bbe
+**Verification**:
+```bash
+# Verify the jvm-abi-gen.jar version
+shasum -a 256 kotlin-compiler-override/lib/jvm-abi-gen.jar
+# Should output: 27fd2cde53377dec9505a580bd0583b8fcecfab18927143decc3fa8303fb57a5
 
-   # Verify it's 2.8M (not 951K stock version)
-   ls -lh /tmp/kotlin-compiler-patched/kotlinc/lib/jvm-abi-gen.jar
-   # Should show: 2.8M
-   ```
+# Verify it's 2.8M (not 951K stock version)
+ls -lh kotlin-compiler-override/lib/jvm-abi-gen.jar
+# Should show: 2.8M
+```
 
 ### Building
 
 ```bash
-# Clean build
-bazel clean
+# First-time setup
+./scripts/setup-kotlin-compiler.sh
+
+# Build all modules
+bazel build //...
 
 # Build and analyze ABI jars
 bazel build //network:src_main //scope:src_main

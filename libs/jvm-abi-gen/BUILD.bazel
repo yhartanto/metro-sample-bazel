@@ -1,0 +1,8 @@
+package(default_visibility = ["//visibility:public"])
+
+# Custom jvm-abi-gen that preserves Metro compiler metadata
+exports_files([
+    "jvm-abi-gen-2.2.255-SNAPSHOT.jar",
+    "jvm-abi-gen-2.2.255-SNAPSHOT-shadow.jar",
+    "jvm-abi-gen-embeddable-2.2.255-SNAPSHOT.jar",
+])
